@@ -60,7 +60,7 @@ mkdir C:\MCP-Demo_Ollama
 cd C:\MCP-Demo_Ollama
 ```
 
-2. Kopieren Sie alle 5 Dateien bzw. 4 Dateien (Ollama) in den entsprechenden lokalen Ordner [siehe code in diesem Kapitel:](../11-intro-to-mcp/code/)
+2. Kopieren Sie alle 5 Dateien bzw. 4 Dateien (Ollama) in den entsprechenden lokalen Ordner [siehe code in diesem Kapitel:](code/)
    - `einfacher_api_call.py`
    - `mcp_client.py`
    - `mcp_server.py`
