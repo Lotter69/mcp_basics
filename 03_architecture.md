@@ -318,6 +318,6 @@ MCP Client ──Antwort──> Benutzer (Terminal/UI)
 
 ![line](images/banner.png)
 <p align="center">
-<a href="../11-intro-to-mcp/02_tool.md"><img src="images/previous.png" width="150px"></a>
-<a href="../11-intro-to-mcp/04_client_llm.md"><img src="images/next.png" width="150px"></a>
+<a href="02_tool.md"><img src="images/previous.png" width="150px"></a>
+<a href="04_client_llm.md"><img src="images/next.png" width="150px"></a>
 </p>

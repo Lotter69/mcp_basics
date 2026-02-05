@@ -338,6 +338,5 @@ Client connected
 
 ![line](images/banner.png)
 <p align="center">
-<a href="../11-intro-to-mcp/04_client_llm.md"><img src="images/previous.png" width="150px"></a>
-<a href="../12-demo-mcp/1.md"><img src="images/next.png" width="150px"></a>
+<a href="04_client_llm.md"><img src="images/previous.png" width="150px"></a>
 </p>

@@ -321,6 +321,6 @@ Content-Type: application/json
 
 ![line](images/banner.png)
 <p align="center">
-<a href="../11-intro-to-mcp/03_architecture.md"><img src="images/previous.png" width="150px"></a>
-<a href="../11-intro-to-mcp/05_inspector.md"><img src="images/next.png" width="150px"></a>
+<a href="03_architecture.md"><img src="images/previous.png" width="150px"></a>
+<a href="05_inspector.md"><img src="images/next.png" width="150px"></a>
 </p>
