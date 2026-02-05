@@ -283,6 +283,6 @@ Ihr Prompt sollte wieder normal aussehen (ohne `(venv)`).
 
 ![line](images/banner.png)
 <p align="center">
-<a href="../11-intro-to-mcp/00.md"><img src="images/previous.png" width="150px"></a>
-<a href="../11-intro-to-mcp/02_tool.md"><img src="images/next.png" width="150px"></a>
+
+<a href="02_tool.md"><img src="images/next.png" width="150px"></a>
 </p>
