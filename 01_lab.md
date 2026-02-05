@@ -283,6 +283,5 @@ Ihr Prompt sollte wieder normal aussehen (ohne `(venv)`).
 
 ![line](images/banner.png)
 <p align="center">
-
 <a href="02_tool.md"><img src="images/next.png" width="150px"></a>
 </p>
