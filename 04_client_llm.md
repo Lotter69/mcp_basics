@@ -20,7 +20,7 @@ Nach Abschluss dieser Laborübung können Sie:
 - Wireshark installiert
 - Ollama läuft
 - Modell z. B. `qwen2.5-coder:3b` heruntergeladen
-- Python Virtual Environment mit `ollama` und `mcp` Bibliotheken [siehe Hinführung zu MCP, Schritt 2, 1b](../11-intro-to-mcp/01_lab.md)
+- Python Virtual Environment mit `ollama` und `mcp` Bibliotheken [siehe Hinführung zu MCP, Schritt 2, 1b](01_lab.md)
 - `mcp_client_ollama.py` und `mcp_server.py` im Projektordner
 
 ### Vorbereitung
