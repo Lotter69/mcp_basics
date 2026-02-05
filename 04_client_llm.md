@@ -1,6 +1,6 @@
 # Laborübung 1: Analyse der LLM-Kommunikation mit Wireshark
 
-![line](../../images/banner.png)
+![line](images/banner.png)
 
 ## Lernziele
 
@@ -319,8 +319,8 @@ Content-Type: application/json
 - Date: 12/2025
 - Version: v1.0
 
-![line](../../images/banner.png)
+![line](images/banner.png)
 <p align="center">
-<a href="../11-intro-to-mcp/03_architecture.md"><img src="../../images/previous.png" width="150px"></a>
-<a href="../11-intro-to-mcp/05_inspector.md"><img src="../../images/next.png" width="150px"></a>
+<a href="../11-intro-to-mcp/03_architecture.md"><img src="images/previous.png" width="150px"></a>
+<a href="../11-intro-to-mcp/05_inspector.md"><img src="images/next.png" width="150px"></a>
 </p>

@@ -1,6 +1,6 @@
 # Sachwissen - Werkzeugkasten des MCP-Servers
 
-![line](../../images/banner.png)
+![line](images/banner.png)
 
 
 ## Grundaufbau des verwendeten MCP-Servers
@@ -228,8 +228,8 @@ Ein MCP Tool besteht aus:
 - Date: 12/2025
 - Version: v1.0
 
-![line](../../images/banner.png)
+![line](images/banner.png)
 <p align="center">
-<a href="../11-intro-to-mcp/01_lab.md"><img src="../../images/previous.png" width="150px"></a>
-<a href="../11-intro-to-mcp/03_architecture.md"><img src="../../images/next.png" width="150px"></a>
+<a href="../11-intro-to-mcp/01_lab.md"><img src="images/previous.png" width="150px"></a>
+<a href="../11-intro-to-mcp/03_architecture.md"><img src="images/next.png" width="150px"></a>
 </p>

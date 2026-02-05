@@ -1,6 +1,6 @@
 # Sachwissen - Systemarchitektur mit MCP und LLM (API-Provider)
 
-![line](../../images/banner.png)
+![line](images/banner.png)
 
 
 ## Detailliertes Sequenzdiagramm
@@ -316,8 +316,8 @@ MCP Client ──Antwort──> Benutzer (Terminal/UI)
 - Date: 12/2025
 - Version: v1.0
 
-![line](../../images/banner.png)
+![line](images/banner.png)
 <p align="center">
-<a href="../11-intro-to-mcp/02_tool.md"><img src="../../images/previous.png" width="150px"></a>
-<a href="../11-intro-to-mcp/04_client_llm.md"><img src="../../images/next.png" width="150px"></a>
+<a href="../11-intro-to-mcp/02_tool.md"><img src="images/previous.png" width="150px"></a>
+<a href="../11-intro-to-mcp/04_client_llm.md"><img src="images/next.png" width="150px"></a>
 </p>
