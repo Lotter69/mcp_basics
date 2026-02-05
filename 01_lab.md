@@ -3,7 +3,7 @@
 ![line](images/banner.png)
 
 ## Einführung
-Chat-Anfragen an LLMs liefern je nach Fragestellung beeindruckende Ergebnisse. Die Qualität und die Schärfe der Antworten beruhen auf einem Trainingszustand des verwendetene Modells, der in der Vergangenheit liegt, der Kontext der Anfrage fehlt oft und muss abgeleitet werden. Um den Kontext herzustellen, können Anfragen angereichert werden. Eine Methode der Anreicherung haben Sie am ersten Tag des Workshops kennengelernt. In einem einfachen RAG-Workflow (Retrieval-Augmented Generation) konnten Sie mit der Anfrage Kontext bereitstellen, der zielführendere Antworten geliefert hat.
+Chat-Anfragen an LLMs liefern je nach Fragestellung beeindruckende Ergebnisse. Die Qualität und die Schärfe der Antworten beruhen auf einem Trainingszustand des verwendetene Modells, der in der Vergangenheit liegt, der Kontext der Anfrage fehlt oft und muss abgeleitet werden. Um den Kontext herzustellen, können Anfragen angereichert werden. Eine Methode der Anreicherung ist RAG (Retrieval-Augmented Generation).
 
 Eine weitere Methode der Kontextualisieurng bietet das Model Context Protocol, welches Sie hier kennenlernen werden.
 
