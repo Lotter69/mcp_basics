@@ -1,6 +1,6 @@
 # Hinführung zu MCP (Model Context Protokoll)
 
-![line](../../images/banner.png)
+![line](images/banner.png)
 
 ## Einführung
 Chat-Anfragen an LLMs liefern je nach Fragestellung beeindruckende Ergebnisse. Die Qualität und die Schärfe der Antworten beruhen auf einem Trainingszustand des verwendetene Modells, der in der Vergangenheit liegt, der Kontext der Anfrage fehlt oft und muss abgeleitet werden. Um den Kontext herzustellen, können Anfragen angereichert werden. Eine Methode der Anreicherung haben Sie am ersten Tag des Workshops kennengelernt. In einem einfachen RAG-Workflow (Retrieval-Augmented Generation) konnten Sie mit der Anfrage Kontext bereitstellen, der zielführendere Antworten geliefert hat.
@@ -281,8 +281,8 @@ Ihr Prompt sollte wieder normal aussehen (ohne `(venv)`).
 - Date: 12/2025
 - Version: v1.0
 
-![line](../../images/banner.png)
+![line](images/banner.png)
 <p align="center">
-<a href="../11-intro-to-mcp/00.md"><img src="../../images/previous.png" width="150px"></a>
-<a href="../11-intro-to-mcp/02_tool.md"><img src="../../images/next.png" width="150px"></a>
+<a href="../11-intro-to-mcp/00.md"><img src="images/previous.png" width="150px"></a>
+<a href="../11-intro-to-mcp/02_tool.md"><img src="images/next.png" width="150px"></a>
 </p>
