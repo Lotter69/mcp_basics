@@ -1,0 +1,19 @@
+meta {
+  name: Get Licensing Information
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/api/v0/licensing
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves licensing information and status.
+}

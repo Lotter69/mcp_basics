@@ -1,0 +1,37 @@
+meta {
+  name: Create Link
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/v0/labs/:lab_id/links
+  body: json
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "interface_a": "interface_id_1",
+    "interface_b": "interface_id_2"
+  }
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setVar("link_id", res.body.id);
+  }
+}
+
+docs {
+  Creates a link between two interfaces.
+  You need to provide valid interface IDs from existing nodes.
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Get Sample Labs
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{base_url}}/api/v0/sample_labs
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves the list of available sample labs that can be imported.
+}

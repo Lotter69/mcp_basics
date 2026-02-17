@@ -1,0 +1,24 @@
+meta {
+  name: Get Node State
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{base_url}}/api/v0/labs/:lab_id/nodes/:node_id/state
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+  node_id: {{node_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves the current state of the node (DEFINED_ON_CORE, STARTED, STOPPED, BOOTED).
+}

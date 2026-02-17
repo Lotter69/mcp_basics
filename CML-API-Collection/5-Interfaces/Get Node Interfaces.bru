@@ -1,0 +1,24 @@
+meta {
+  name: Get Node Interfaces
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v0/labs/:lab_id/nodes/:node_id/interfaces
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+  node_id: {{node_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves all interfaces of a specific node.
+}

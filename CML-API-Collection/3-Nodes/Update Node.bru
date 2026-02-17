@@ -1,0 +1,33 @@
+meta {
+  name: Update Node
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base_url}}/api/v0/labs/:lab_id/nodes/:node_id
+  body: json
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+  node_id: {{node_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "label": "Updated-Router",
+    "x": 150,
+    "y": 150,
+    "configuration": "hostname Updated-Router\n"
+  }
+}
+
+docs {
+  Updates node properties such as label, position, or configuration.
+}

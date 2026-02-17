@@ -1,0 +1,19 @@
+meta {
+  name: Get System Information
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v0/system_information
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves system information including version, hostname, and system stats.
+}

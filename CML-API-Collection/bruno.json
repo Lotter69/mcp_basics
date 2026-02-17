@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Cisco Modeling Lab API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

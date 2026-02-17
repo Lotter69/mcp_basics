@@ -1,0 +1,19 @@
+meta {
+  name: Get Diagnostics
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/v0/diagnostics
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves diagnostic information about the CML system.
+}

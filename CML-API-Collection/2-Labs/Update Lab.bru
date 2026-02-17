@@ -1,0 +1,31 @@
+meta {
+  name: Update Lab
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{base_url}}/api/v0/labs/:lab_id
+  body: json
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "Updated Lab Title",
+    "description": "Updated description",
+    "notes": "Additional notes"
+  }
+}
+
+docs {
+  Updates the lab properties such as title, description, and notes.
+}

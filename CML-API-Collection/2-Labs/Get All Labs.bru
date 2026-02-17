@@ -1,0 +1,20 @@
+meta {
+  name: Get All Labs
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v0/labs
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves a list of all labs in the system.
+  Returns lab IDs, titles, descriptions, and states.
+}

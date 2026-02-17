@@ -1,0 +1,24 @@
+meta {
+  name: Get Lab by ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/v0/labs/:lab_id
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves detailed information about a specific lab.
+  Replace :lab_id with the actual lab ID or use the stored variable.
+}

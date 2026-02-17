@@ -1,0 +1,23 @@
+meta {
+  name: Get Lab State
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{base_url}}/api/v0/labs/:lab_id/state
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves the current state of the lab (DEFINED_ON_CORE, STARTED, STOPPED, etc.).
+}

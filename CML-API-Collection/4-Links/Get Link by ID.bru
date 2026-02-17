@@ -1,0 +1,24 @@
+meta {
+  name: Get Link by ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/v0/labs/:lab_id/links/:link_id
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+  link_id: {{link_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves information about a specific link.
+}

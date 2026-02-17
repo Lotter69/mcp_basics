@@ -1,0 +1,39 @@
+meta {
+  name: Import Lab
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{base_url}}/api/v0/import
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+params:query {
+  title: Imported Lab
+}
+
+body:json {
+  {
+    "lab": {
+      "description": "Imported via API",
+      "notes": "",
+      "timestamp": 0.0,
+      "title": "Imported Lab",
+      "version": "0.0.5"
+    },
+    "nodes": [],
+    "links": [],
+    "interfaces": []
+  }
+}
+
+docs {
+  Imports a lab from YAML format.
+  You can import existing lab topologies.
+}

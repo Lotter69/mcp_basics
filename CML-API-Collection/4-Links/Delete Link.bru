@@ -1,0 +1,24 @@
+meta {
+  name: Delete Link
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{base_url}}/api/v0/labs/:lab_id/links/:link_id
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+  link_id: {{link_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Deletes the specified link between two interfaces.
+}

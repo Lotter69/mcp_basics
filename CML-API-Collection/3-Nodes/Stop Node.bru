@@ -1,0 +1,24 @@
+meta {
+  name: Stop Node
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{base_url}}/api/v0/labs/:lab_id/nodes/:node_id/stop
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+  node_id: {{node_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Stops the specified node gracefully.
+}

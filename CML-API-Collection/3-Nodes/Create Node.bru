@@ -1,0 +1,41 @@
+meta {
+  name: Create Node
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/v0/labs/:lab_id/nodes
+  body: json
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "label": "Firefox",
+    "node_definition": "firefox",
+    "x": 200,
+    "y": 100,
+    "configuration": ""
+  }
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setVar("node_id", res.body.id);
+  }
+}
+
+docs {
+  Creates a new node in the lab.
+  Available node definitions: iosv, iosxrv, nxosv, asav, server, ubuntu, alpine, etc.
+  The node ID is stored for subsequent operations.
+}

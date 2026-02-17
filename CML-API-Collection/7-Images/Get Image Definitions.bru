@@ -1,0 +1,20 @@
+meta {
+  name: Get Image Definitions
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/v0/image_definitions
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves all available image definitions.
+  Shows which disk images are available for node types.
+}

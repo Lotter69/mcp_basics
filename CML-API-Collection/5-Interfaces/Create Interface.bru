@@ -1,0 +1,37 @@
+meta {
+  name: Create Interface
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/v0/labs/:lab_id/nodes/:node_id/interfaces
+  body: json
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+  node_id: {{node_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "slot": 0,
+    "label": "GigabitEthernet0/0"
+  }
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setVar("interface_id", res.body.id);
+  }
+}
+
+docs {
+  Creates a new interface on the specified node.
+}

@@ -1,0 +1,34 @@
+meta {
+  name: Create Lab
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/v0/labs
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "bussi",
+    "description": "Created via API",
+    "notes": ""
+  }
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setVar("lab_id", res.body.id);
+  }
+}
+
+docs {
+  Creates a new lab with the specified title and description.
+  The lab ID is stored in a variable for subsequent requests.
+}

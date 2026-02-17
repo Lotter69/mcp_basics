@@ -1,0 +1,23 @@
+meta {
+  name: Get All Links in Lab
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/v0/labs/:lab_id/links
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves all links (connections between nodes) in the lab.
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Get System Stats
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/v0/system_stats
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves current system statistics including CPU, memory, and disk usage.
+}

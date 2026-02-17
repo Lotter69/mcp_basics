@@ -1,0 +1,24 @@
+meta {
+  name: Stop Lab
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{base_url}}/api/v0/labs/:lab_id/stop
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Stops all running nodes in the specified lab.
+  This gracefully shuts down the nodes.
+}

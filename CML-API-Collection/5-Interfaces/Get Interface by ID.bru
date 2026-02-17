@@ -1,0 +1,24 @@
+meta {
+  name: Get Interface by ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/v0/labs/:lab_id/interfaces/:interface_id
+  body: none
+  auth: bearer
+}
+
+params:path {
+  lab_id: {{lab_id}}
+  interface_id: {{interface_id}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Retrieves information about a specific interface.
+}
