@@ -223,7 +223,7 @@ Content-Type: application/json
     "content": "{\"tool\": \"patchkabel_bestand_abfragen\", \"farbe\": \"blau\"}"
   }
 }
-
+```
 ---
 
 ### Schritt 11: Zweite Anfrage analysieren (Mit Tool-Ergebnis)
