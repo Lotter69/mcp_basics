@@ -154,7 +154,7 @@ Wie viele blaue Patchkabel haben wir auf Lager?
 **Aktion:**
 1. In Wireshark oben im Filter-Feld eingeben:
    ```
-   tcp.port == 11434
+   tcp.port == 11434 "Standardport für Ollama"
    ```
 2. Enter drücken oder auf Pfeil-Symbol klicken
 
