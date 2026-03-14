@@ -44,7 +44,11 @@ ls -la /pfad/zu/mcp-demo_ollama
 cd /pfad/zu/mcp-demo_ollama
 source venv/bin/activate
 ```
-
+Powershell
+```bash
+cd /pfad/zu/mcp-demo_ollama
+ .\venv\Scripts\Activate.ps1
+```
 **Erwartetes Ergebnis:**
 - Prompt zeigt `(venv)` am Anfang
 - Sie befinden sich im Projektordner
