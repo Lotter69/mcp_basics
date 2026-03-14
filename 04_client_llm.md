@@ -272,7 +272,7 @@ Content-Type: application/json
 
 ---
 
-### Schritt 11: Reflexion und weitere Experimente
+### Schritt 12: Reflexion und weitere Experimente
 
 - Was wird dem LLM mitgeteilt?
 
