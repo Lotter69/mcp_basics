@@ -192,7 +192,7 @@ Wie viele blaue Patchkabel haben wir auf Lager?
 
 **Im Stream-Fenster sehen Sie:**
 
-**HTTP Request (Rot):**
+**HTTP Request:**
 ```http
 POST /api/chat HTTP/1.1
 Host: localhost:11434
@@ -214,7 +214,7 @@ Content-Type: application/json
 }
 ```
 
-**HTTP Response (Blau):**
+**HTTP Response:**
 ```json
 {
   "model": "qwen2.5-coder:3b",
@@ -235,7 +235,7 @@ Content-Type: application/json
 
 **Im Stream sehen Sie:**
 
-**HTTP Request (Rot):**
+**HTTP Request:**
 ```json
 {
   "model": "qwen2.5-coder:3b",
@@ -260,7 +260,7 @@ Content-Type: application/json
 }
 ```
 
-**HTTP Response (Blau):**
+**HTTP Response:**
 ```json
 {
   "message": {
