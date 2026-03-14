@@ -62,6 +62,7 @@ ls -la
 ---
 
 ### Schritt 1: MCP Inspector starten
+Die MCP-Server-Datei "mcp_server.py" wird dem Inspektor als Argument übergeben. Danach startet der Server im Standardbrowser.
 
 **Aktion:**
 ```bash
