@@ -170,12 +170,12 @@ python -m venv venv
 
 **In cmd (Eingabeaufforderung):**
 ```cmd
-venv\Scripts\activate.bat
+.\venv\Scripts\activate.bat
 ```
 
 **In PowerShell:**
 ```powershell
-venv\Scripts\Activate.ps1
+.\venv\Scripts\Activate.ps1
 ```
 
 **Erfolg:** Ihr Prompt sollte nun mit `(venv)` beginnen:
