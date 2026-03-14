@@ -67,6 +67,10 @@ ls -la
 ```bash
 npx @modelcontextprotocol/inspector ./venv/bin/python3 mcp_server.py
 ```
+Powershell
+```bash
+npx @modelcontextprotocol/inspector .\venv\Scripts\python.exe mcp_server.py
+```
 
 **Alternative (falls python3 nicht funktioniert):**
 ```bash
