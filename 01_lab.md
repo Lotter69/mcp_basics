@@ -220,7 +220,7 @@ Mit Ollama sollten Sie sehen:
 **Hinweis** Je nach API-Provider lokal mit Ollama und einem lokalen Modell oder entfernt mit z. B. Anthropic als Provider und einem verfügbaren Sprachmodell z. B. Claude Sonnet
 
 Testen Sie zunächst die einfache Anfrage an ein LLM
-- Rufen Sie das Skript "einfacher_api_call.py" auf
+- Rufen Sie das Skript "einfacher_api_call_ollama.py" auf
 - Stellen Sie Ihre Frage zum Lagerbestand.
 
 ```cmd
