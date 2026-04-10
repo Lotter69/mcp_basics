@@ -224,7 +224,7 @@ Testen Sie zunächst die einfache Anfrage an ein LLM
 - Stellen Sie Ihre Frage zum Lagerbestand.
 
 ```cmd
-python einfacher_api_call.py
+python einfacher_api_call_ollama.py
 ```
 
 # Lab 02: Abfrage des Lagerbestands an LLM mit MCP-Tool
