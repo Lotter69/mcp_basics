@@ -1,5 +1,5 @@
-# Getestete Versionen fuer den Workshop (Block A: MCP-Grundlagen)
-# mcp 2.x ist nicht kompatibel mit dem Code (mcp_server.py, mcp_client_ollama.py),
-# daher auf die 1.9er-Reihe festgelegt.
-mcp~=1.9.0
+# Getestet mit mcp 2.3.0 und ollama 0.6.3
+# Der Code nutzt die Server-API von mcp 2.x (on_list_tools / on_call_tool)
+# und laeuft NICHT mit mcp 1.x.
+mcp>=2.3,<3
 ollama>=0.6,<0.7

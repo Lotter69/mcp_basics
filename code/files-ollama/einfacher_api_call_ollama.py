@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
 Einfacher API-Call an lokales Ollama Modell
-Verwendet: llama3.2:latest
+Verwendet: qwen2.5-coder:3b
 """
 import ollama
 
 def main():
     print("Ollama Chat gestartet")
-    print("Modell: llama3.2:latest")
+    print("Modell: qwen2.5-coder:3b")
     print("Geben Sie 'exit' ein, um den Chat zu beenden")
     print("=" * 60)
     
@@ -31,7 +31,7 @@ def main():
         
         try:
             response = ollama.chat(
-                model='llama3.2:latest',
+                model='qwen2.5-coder:3b',
                 messages=[
                     {
                         'role': 'user',
@@ -49,8 +49,8 @@ def main():
             print(f"\n Fehler bei der Kommunikation mit Ollama: {e}")
             print("\nStellen Sie sicher, dass:")
             print("  1. Ollama läuft (ollama serve)")
-            print("  2. Das Modell llama3.2:latest installiert ist")
-            print("     (ollama pull llama3.2:latest)")
+            print("  2. Das Modell qwen2.5-coder:3b installiert ist")
+            print("     (ollama pull qwen2.5-coder:3b)")
             print()
 
 if __name__ == "__main__":

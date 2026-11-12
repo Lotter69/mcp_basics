@@ -4,6 +4,7 @@ MCP Client mit Ollama - Natürliche Spracheingabe
 Nutzt lokales Ollama Modell und verbindet sich mit dem MCP Server
 """
 import asyncio
+import sys
 import json
 import ollama
 from mcp import ClientSession, StdioServerParameters
@@ -36,7 +37,7 @@ async def main():
     
     # Verbindung zum MCP Server aufbauen
     server_params = StdioServerParameters(
-        command="python",
+        command=sys.executable,  # Python der aktiven venv
         args=["mcp_server.py"]
     )
     

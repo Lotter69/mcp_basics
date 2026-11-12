@@ -2,14 +2,12 @@
 """
 MCP Server für Patchkabel-Lagerbestand
 Stellt 1 Tool bereit: Bestand abfragen
+Benötigt: mcp 2.x (siehe requirements.txt)
 """
 import asyncio
 from mcp.server import Server
-from mcp.types import Tool, TextContent
+from mcp.types import Tool, TextContent, ListToolsResult, CallToolResult
 from mcp.server.stdio import stdio_server
-
-# Server-Instanz erstellen
-server = Server("patchkabel-lager-server")
 
 # Hardcodierter Lagerbestand
 LAGER_BESTAND = {
@@ -79,37 +77,45 @@ def patchkabel_bestand_abfragen(farbe: str) -> str:
 # MCP SERVER SETUP
 # =============================================================================
 
-@server.list_tools()
-async def list_tools() -> list[Tool]:
+async def list_tools(ctx, params) -> ListToolsResult:
     """
     Gibt die Liste aller verfügbaren Tools zurück.
-    Diese Funktion wird vom MCP Client aufgerufen.
+    Diese Funktion wird vom MCP Client aufgerufen (tools/list).
     """
-    return [TOOL_DESCRIPTION]
+    return ListToolsResult(tools=[TOOL_DESCRIPTION])
 
 
-@server.call_tool()
-async def call_tool(name: str, arguments: dict) -> list[TextContent]:
+async def call_tool(ctx, params) -> CallToolResult:
     """
-    Verarbeitet Tool-Aufrufe vom MCP Client.
+    Verarbeitet Tool-Aufrufe vom MCP Client (tools/call).
     Ruft die entsprechende Tool-Funktion basierend auf dem Namen auf.
-    
+
     Args:
-        name: Name des aufzurufenden Tools
-        arguments: Dictionary mit den Tool-Argumenten
-    
+        params.name: Name des aufzurufenden Tools
+        params.arguments: Dictionary mit den Tool-Argumenten
+
     Returns:
-        Liste mit TextContent-Objekten (MCP Response)
+        CallToolResult mit TextContent (MCP Response)
     """
-    
+    name = params.name
+    arguments = params.arguments or {}
+
     if name == "patchkabel_bestand_abfragen":
         result = patchkabel_bestand_abfragen(
             farbe=arguments["farbe"]
         )
-        return [TextContent(type="text", text=result)]
-    
+        return CallToolResult(content=[TextContent(type="text", text=result)])
+
     else:
         raise ValueError(f"Unbekanntes Tool: {name}")
+
+
+# Server-Instanz erstellen und die beiden Funktionen als Handler registrieren
+server = Server(
+    "patchkabel-lager-server",
+    on_list_tools=list_tools,
+    on_call_tool=call_tool,
+)
 
 
 async def main():
