@@ -119,7 +119,7 @@ Bei **initialize** und **tools/list** stehen rechts die Antwortzeit und **OK**: 
 
 **Aktion:**
 1. Klappen Sie den Eintrag **initialize** auf (Pfeil-Symbol rechts im Eintrag)
-2. Sehen Sie sich die Anfrage (Request) an
+2. Im aufgeklappten Eintrag stehen zwei Blöcke untereinander: **oben die Anfrage (Request)**, **darunter die Antwort** mit der Überschrift **„Response:“**. Sehen Sie sich zunächst den oberen Block an (gegebenenfalls nach oben scrollen).
 
 **Sie sehen (JSON, gekürzt):**
 ```json
@@ -131,21 +131,25 @@ Bei **initialize** und **tools/list** stehen rechts die Antwortzeit und **OK**: 
     "protocolVersion": "2025-11-25",
     "capabilities": { ... },
     "clientInfo": {
-      "name": "...",
-      "version": "..."
+      "name": "mcp-inspector",
+      "version": "2.13.0"
     }
   }
 }
 ```
 
-> **Hinweis:** `id`, `capabilities` und die Angaben in `clientInfo` hängen von der eingesetzten Inspector-Version ab und können bei Ihnen abweichen.
+**Beobachten Sie:**
+- In der Anfrage stellt sich der **Client** vor: `clientInfo` mit Name und Version des Inspectors.
+- Unter `capabilities` listet der Client auf, was **er selbst** kann (z. B. `sampling`, `elicitation`, `extensions`). So wissen beide Seiten nach der Initialisierung, welche Funktionen sie nutzen dürfen.
+
+> **Hinweis:** Die Versionsnummer des Inspectors und der Umfang der `capabilities` hängen von der eingesetzten Inspector-Version ab und können bei Ihnen abweichen.
 
 ---
 
 ### Schritt 5: Initialize Response analysieren
 
 **Aktion:**
-1. Sehen Sie sich im aufgeklappten Eintrag **initialize** die Antwort (Response) an
+1. Sehen Sie sich im aufgeklappten Eintrag **initialize** den unteren Block mit der Überschrift **„Response:“** an
 
 **Sie sehen (JSON):**
 ```json
@@ -171,6 +175,7 @@ Bei **initialize** und **tools/list** stehen rechts die Antwortzeit und **OK**: 
 - `serverInfo.name` und `serverInfo.version` stammen aus `mcp_server.py`: `Server("patchkabel-lager-server", version="1.0.0", ...)`. Der Name erscheint auch oben links im Inspector.
 - `capabilities.tools` zeigt dem Client: Dieser Server bietet Tools an.
 - `protocolVersion` ist die ausgehandelte Version, die auch in der Server-Karte angezeigt wird.
+- **Merksatz:** `clientInfo` steht in der Anfrage, `serverInfo` in der Antwort.
 
 ---
 
@@ -178,7 +183,7 @@ Bei **initialize** und **tools/list** stehen rechts die Antwortzeit und **OK**: 
 
 **Aktion:**
 1. Klappen Sie den Eintrag **tools/list** auf
-2. Sehen Sie sich die Anfrage an
+2. Sehen Sie sich den oberen Block (Anfrage) an
 
 **Sie sehen (JSON):**
 ```json
@@ -196,7 +201,7 @@ Je nach Inspector-Version steht zusätzlich ein leeres `"params": {}` darin.
 ### Schritt 7: tools/list Response analysieren - Teil 1 (Struktur)
 
 **Aktion:**
-1. Sehen Sie sich im aufgeklappten Eintrag **tools/list** die Antwort an
+1. Sehen Sie sich im aufgeklappten Eintrag **tools/list** den Block **„Response:“** an
 
 **Sie sehen (JSON):**
 ```json
@@ -289,7 +294,7 @@ Es erscheinen die Beschreibung des Tools und ein Eingabefeld für den Parameter 
 
 **Aktion:**
 1. Rechts unter **Protocol → Messages** ist ein neuer Eintrag hinzugekommen: **tools/call**
-2. Klappen Sie ihn auf und sehen Sie sich die Anfrage an
+2. Klappen Sie ihn auf und sehen Sie sich den oberen Block (Anfrage) an
 
 **Sie sehen (JSON):**
 ```json
@@ -311,7 +316,7 @@ Es erscheinen die Beschreibung des Tools und ein Eingabefeld für den Parameter 
 ### Schritt 12: tools/call Response analysieren
 
 **Aktion:**
-1. Sehen Sie sich im aufgeklappten Eintrag **tools/call** die Antwort an
+1. Sehen Sie sich im aufgeklappten Eintrag **tools/call** den Block **„Response:“** an
 
 **Sie sehen (JSON):**
 ```json
