@@ -119,21 +119,18 @@ Bei **initialize** und **tools/list** stehen rechts die Antwortzeit und **OK**: 
 
 **Aktion:**
 1. Klappen Sie den Eintrag **initialize** auf (Pfeil-Symbol rechts im Eintrag)
-2. Im aufgeklappten Eintrag stehen zwei Blöcke untereinander: **oben die Anfrage (Request)**, **darunter die Antwort** mit der Überschrift **„Response:“**. Sehen Sie sich zunächst den oberen Block an (gegebenenfalls nach oben scrollen).
+2. Im aufgeklappten Eintrag stehen zwei Blöcke untereinander: oben **„Parameters:“** (die Anfrage des Clients), darunter **„Response:“** (die Antwort des Servers). Sehen Sie sich zunächst den oberen Block an (gegebenenfalls nach oben scrollen).
 
-**Sie sehen (JSON, gekürzt):**
+> **Hinweis zur Anzeige:** Der Inspector zeigt bei der Anfrage nur den Teil `params`. Die Methode steht als Etikett im Eintrag (**INITIALIZE**), die Felder `jsonrpc` und `id` der Anfrage werden nicht angezeigt. Vollständig sähe die Anfrage so aus: `{"jsonrpc": "2.0", "id": 0, "method": "initialize", "params": { … }}`
+
+**Sie sehen unter „Parameters:“ (JSON, gekürzt):**
 ```json
 {
-  "jsonrpc": "2.0",
-  "id": 0,
-  "method": "initialize",
-  "params": {
-    "protocolVersion": "2025-11-25",
-    "capabilities": { ... },
-    "clientInfo": {
-      "name": "mcp-inspector",
-      "version": "2.13.0"
-    }
+  "protocolVersion": "2025-11-25",
+  "capabilities": { ... },
+  "clientInfo": {
+    "name": "mcp-inspector",
+    "version": "2.13.0"
   }
 }
 ```
@@ -183,18 +180,20 @@ Bei **initialize** und **tools/list** stehen rechts die Antwortzeit und **OK**: 
 
 **Aktion:**
 1. Klappen Sie den Eintrag **tools/list** auf
-2. Sehen Sie sich den oberen Block (Anfrage) an
+2. Sehen Sie sich den Block **„Parameters:“** an
 
 **Sie sehen (JSON):**
 ```json
 {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "tools/list"
+  "_meta": {
+    "progressToken": 1
+  }
 }
 ```
 
-Je nach Inspector-Version steht zusätzlich ein leeres `"params": {}` darin.
+**Beobachten Sie:**
+- Für `tools/list` braucht der Client keine eigenen Parameter. Er fragt einfach: „Welche Tools hast du?“
+- `_meta` enthält Zusatzinformationen zur Anfrage selbst. Mit dem `progressToken` bietet der Client an, Fortschrittsmeldungen zu dieser Anfrage zu empfangen. Unser Server nutzt das nicht.
 
 ---
 
@@ -294,22 +293,21 @@ Es erscheinen die Beschreibung des Tools und ein Eingabefeld für den Parameter 
 
 **Aktion:**
 1. Rechts unter **Protocol → Messages** ist ein neuer Eintrag hinzugekommen: **tools/call**
-2. Klappen Sie ihn auf und sehen Sie sich den oberen Block (Anfrage) an
+2. Klappen Sie ihn auf und sehen Sie sich den Block **„Parameters:“** an
 
 **Sie sehen (JSON):**
 ```json
 {
-  "jsonrpc": "2.0",
-  "id": 2,
-  "method": "tools/call",
-  "params": {
-    "name": "patchkabel_bestand_abfragen",
-    "arguments": {
-      "farbe": "blau"
-    }
+  "name": "patchkabel_bestand_abfragen",
+  "arguments": {
+    "farbe": "blau"
   }
 }
 ```
+
+Je nach Inspector-Version steht zusätzlich ein Abschnitt `_meta` mit `progressToken` darin (wie bei tools/list).
+
+**Beobachten Sie:** `name` und `arguments` sind genau die Werte, die der Handler `call_tool(ctx, params)` in `mcp_server.py` als `params.name` und `params.arguments` auswertet.
 
 ---
 
@@ -336,8 +334,9 @@ Es erscheinen die Beschreibung des Tools und ein Eingabefeld für den Parameter 
 ```
 
 **Beobachten Sie:**
-- `params.name` und `params.arguments` aus dem Request sind genau die Werte, die der Handler `call_tool(ctx, params)` in `mcp_server.py` auswertet.
+- `content` enthält das Ergebnis der Tool-Funktion als Text – genau der Rückgabewert von `CallToolResult(content=[TextContent(...)])` im Server.
 - `isError: false` zeigt an, dass das Tool fehlerfrei ausgeführt wurde.
+- Die `id` der Antwort ordnet sie der passenden Anfrage zu.
 
 ---
 
