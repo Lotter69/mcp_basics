@@ -288,20 +288,15 @@ Genau diese Informationen erhält auch das LLM, um zu entscheiden, wie es das To
 3. Klick auf **Execute Tool**
 
 **Erwartetes Ergebnis:**
-- Es erscheint das Ergebnis des Servers
+- Rechts erscheint der Bereich **Results** mit dem Text:
 
-**Angezeigtes Ergebnis:**
-```json
-{
-  "content": [
-    {
-      "type": "text",
-      "text": "Bestand blaue 1m Patchkabel: 45 Stück"
-    }
-  ],
-  "isError": false
-}
 ```
+Bestand blaue 1m Patchkabel: 45 Stück
+```
+
+**Beobachten Sie:** Der Inspector zeigt hier nur den **Text** aus dem Ergebnis an – also den Rückgabewert der Tool-Funktion `patchkabel_bestand_abfragen()`. Die vollständige MCP-Antwort mit ihrer Struktur (`content`, `type`, `isError`) sehen Sie im Nachrichtenverlauf (Schritt 12).
+
+Mit dem **X** links neben „Results“ kehren Sie zum Formular zurück. Probieren Sie auch **rot** und **gesamt** aus.
 
 ---
 
