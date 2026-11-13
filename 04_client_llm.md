@@ -24,13 +24,15 @@ Nach Abschluss dieser Laborübung können Sie:
 - `mcp_client_ollama.py` und `mcp_server.py` im Projektordner
 
 ### Vorbereitung
-```bash
+```powershell
 # Prüfen: Ollama läuft
 ollama list
 
-# Prüfen: Wireshark installiert
-wireshark --version
+# Prüfen: Wireshark installiert (Start über das Startmenü genügt ebenfalls)
+& "C:\Program Files\Wireshark\Wireshark.exe" --version
 ```
+
+> **Hinweis:** Wireshark muss unter Windows mit **Npcap** und der Option **„Support loopback traffic“** installiert sein, sonst fehlt das Loopback-Interface.
 
 ---
 
@@ -38,10 +40,10 @@ wireshark --version
 
 ### Schritt 0: Projektordner öffnen und venv aktivieren
 
-**Aktion:**
-```bash
-cd /pfad/zu/mcp-demo_ollama
-source venv/bin/activate
+**Aktion (PowerShell):**
+```powershell
+cd C:\akademietag_2026\mcp_basics\mcp-demo_ollama
+.\venv\Scripts\Activate.ps1
 ```
 
 **Erwartetes Ergebnis:**
@@ -49,9 +51,11 @@ source venv/bin/activate
 - Sie befinden sich im Projektordner
 
 **Prüfung:**
-```bash
-which python3
-# Sollte zeigen: /pfad/zu/Ollama-MCP-Demo/venv/bin/python3
+```powershell
+Get-Command python
+# Sollte zeigen: C:\akademietag_2026\mcp_basics\mcp-demo_ollama\venv\Scripts\python.exe
+pip show mcp
+# Sollte Version 2.x zeigen
 ```
 
 ---
@@ -59,20 +63,16 @@ which python3
 ### Schritt 1: Wireshark starten und Loopback-Interface auswählen
 
 **Aktion:**
-1. Wireshark über Terminal oder Menü starten:
-   ```bash
-   sudo wireshark
-   ```
-   (sudo nötig für Paket-Capture)
+1. Wireshark über das Startmenü starten.
 
 2. Im Wireshark-Hauptfenster:
-   - Suchen Sie nach **"Loopback: lo"** oder **"lo"** Interface
+   - Suchen Sie das Interface **„Adapter for loopback traffic capture“** (Npcap-Loopback)
    - **Doppelklick** auf das Loopback-Interface
 
 **Erwartetes Ergebnis:**
 - Wireshark öffnet ein Capture-Fenster
 - Pakete werden noch NICHT gefiltert angezeigt
-- Status unten zeigt "Capturing from 'lo'"
+- Status unten zeigt „Capturing from Adapter for loopback traffic capture“
 
 **Screenshot-Punkt:** Wireshark mit aktivem Loopback-Capture
 
@@ -92,15 +92,14 @@ which python3
 
 ### Schritt 3: MCP-Client vorbereiten (NICHT starten!)
 
-**Aktion:**
-```bash
-# Neues Terminal-Fenster öffnen
+**Aktion (neues PowerShell-Fenster):**
+```powershell
 # venv aktivieren
-cd /pfad/zu/Ollama-MCP-Demo
-source venv/bin/activate
+cd C:\akademietag_2026\mcp_basics\mcp-demo_ollama
+.\venv\Scripts\Activate.ps1
 
 # BEREIT HALTEN, aber NICHT ausführen:
-python3 mcp_client_ollama.py
+python mcp_client_ollama.py
 ```
 
 
@@ -119,8 +118,8 @@ python3 mcp_client_ollama.py
 ### Schritt 5: MCP-Client starten und Frage eingeben
 
 **Aktion:**
-```bash
-python3 mcp_client_ollama.py
+```powershell
+python mcp_client_ollama.py
 ```
 
 **Warten auf Prompt:**
@@ -308,6 +307,10 @@ Content-Type: application/json
    ```
    → Sehen Sie, ob ein Tool-Call gemacht wird (sollte nicht!)
 
+4. **Dialog ohne MCP mitschneiden:**
+   Starten Sie `python einfacher_api_call_ollama.py` und stellen Sie drei aufeinander aufbauende Fragen.
+   → Beobachten Sie, wie die POST-Anfragen an `/api/chat` mit jeder Frage länger werden: Der Client schickt jedes Mal den gesamten Verlauf mit.
+
 
 ---
 
@@ -316,8 +319,8 @@ Content-Type: application/json
 
 ## Autoren und Urheberrecht
 - Created by: Michael Lotter
-- Date: 12/2025
-- Version: v1.0
+- Date: 12/2025, aktualisiert 11/2026 (Windows-Befehle, Dialog-Experiment)
+- Version: v1.1
 
 ![line](images/banner.png)
 <p align="center">

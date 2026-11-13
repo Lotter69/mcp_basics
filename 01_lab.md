@@ -22,7 +22,7 @@ Der vereinfachte Lagerbestand umfasst blaue und rote Patchkabel mit einer Länge
 ## Voraussetzungen
 
 - Python 3.11 oder höher
-- Antropic API Key, Modell z. B. sonnet 4
+- Anthropic API Key, Modell z. B. sonnet 4
 - Alternativer API-Provider - Ollama 0.13.3, Modell z. B. qwen2.5-coder:3b
 
 ## Vorbereitende Aufgaben
@@ -56,16 +56,23 @@ cd C:\MCP-Demo_Antropic
 1b. Erstellen Sie einen neuen Ordner für das Projekt (Ollama):
 
 ```cmd
-mkdir C:\MCP-Demo_Ollama
-cd C:\MCP-Demo_Ollama
+mkdir C:\akademietag_2026\mcp_basics\mcp-demo_ollama
+cd C:\akademietag_2026\mcp_basics\mcp-demo_ollama
 ```
 
-2. Kopieren Sie alle 5 Dateien bzw. 4 Dateien (Ollama) in den entsprechenden lokalen Ordner [siehe code in diesem Kapitel:](code/)
-   - `einfacher_api_call.py`
-   - `mcp_client.py`
-   - `mcp_server.py`
-   - `requirements.txt`
-   - `.env.example` (nur Anthropic)
+> **Hinweis:** Auf den bereitgestellten Notebooks ist dieser Ordner bereits vorhanden und befüllt.
+
+2. Kopieren Sie die Dateien in den entsprechenden lokalen Ordner [siehe code in diesem Kapitel:](code/)
+
+   | Anthropic (5 Dateien) | Ollama (4 Dateien) |
+   |---|---|
+   | `einfacher_api_call.py` | `einfacher_api_call_ollama.py` |
+   | `mcp_client.py` | `mcp_client_ollama.py` |
+   | `mcp_server.py` | `mcp_server.py` |
+   | `requirements.txt` | `requirements.txt` |
+   | `.env.example` | – |
+
+> **Wichtig:** Die Dateien eines Ordners gehören zusammen. Der Server ist für die Bibliothek `mcp` ab Version 2 geschrieben, die `requirements.txt` legt diese Version fest. Werden alte und neue Dateien gemischt, bricht der Server beim Start ab (der Client meldet dann `unhandled errors in a TaskGroup`).
 
 ---
 
@@ -108,7 +115,7 @@ ollama list
 **Option 1 - Hintergrund-Dienst (empfohlen):**
 Ollama läuft normalerweise automatisch als Dienst. Prüfen Sie in der Taskleiste ob das Ollama-Icon vorhanden ist.
 
-**Option 2 - Manuell starten:**python 
+**Option 2 - Manuell starten:**
 ```cmd
 ollama serve
 ```
@@ -211,7 +218,9 @@ Mit Anthropic sollten Sie sehen:
 
 Mit Ollama sollten Sie sehen:
 - `ollama`
-- `mcp`
+- `mcp` in Version **2.x**
+
+> **Prüfen:** `pip show mcp` zeigt die installierte Version. Wird eine Version 1.x angezeigt, führen Sie `pip install -r requirements.txt` erneut aus.
 
 ---
 
@@ -222,10 +231,17 @@ Mit Ollama sollten Sie sehen:
 Testen Sie zunächst die einfache Anfrage an ein LLM
 - Rufen Sie das Skript "einfacher_api_call_ollama.py" auf
 - Stellen Sie Ihre Frage zum Lagerbestand.
+- Stellen Sie anschließend eine Rückfrage, die sich auf die vorherige Antwort bezieht.
 
 ```cmd
 python einfacher_api_call_ollama.py
 ```
+
+**Befehle im Chat:**
+- `exit` beendet den Chat
+- `neu` startet ein neues Gespräch (der bisherige Verlauf wird gelöscht)
+
+> **Beobachtung:** Das Skript zeigt bei jeder Anfrage an, wie viele Nachrichten im Verlauf mitgeschickt werden. Ein Sprachmodell hat kein eigenes Gedächtnis. Der „Dialog“ entsteht nur dadurch, dass der Client bei jeder Frage den gesamten bisherigen Verlauf erneut an das Modell sendet.
 
 # Lab 02: Abfrage des Lagerbestands an LLM mit MCP-Tool
 
@@ -234,12 +250,15 @@ Ein MCP (Model Context Protocol) System zur Abfrage des Patchkabel-Lagerbestands
 
 
 ```cmd
-python mcp_client.py
+python mcp_client_ollama.py
 ```
+
+(Mit Anthropic: `python mcp_client.py`)
 
 **Erwartete Ausgabe:**
 ```
-MCP Patchkabel-Lagerbestand Client gestartet
+Ollama MCP Patchkabel-Lagerbestand Client gestartet
+Modell: qwen2.5-coder:3b
 1 Tool verfügbar:
    - patchkabel_bestand_abfragen: Fragt den aktuellen Lagerbestand von Patchkabeln ab...
 
@@ -247,6 +266,8 @@ MCP Patchkabel-Lagerbestand Client gestartet
 
 Ihre Anfrage (oder 'exit' zum Beenden):
 ```
+
+> **Tipp zur Fehlerbehebung:** Meldet der Client `unhandled errors in a TaskGroup`, ist der MCP-Server beim Start abgebrochen. Der Client zeigt darunter die Ursache an. Starten Sie den Server zur Kontrolle einzeln mit `python mcp_server.py`: Läuft er ohne Meldung, ist er in Ordnung (Beenden mit Strg+C). Häufigste Ursache ist eine alte `mcp_server.py` zusammen mit `mcp` 2.x.
 
 ## Aufräumen
 
@@ -278,8 +299,8 @@ Ihr Prompt sollte wieder normal aussehen (ohne `(venv)`).
 
 ## Autoren und Urheberrecht
 - Created by: Michael Lotter
-- Date: 12/2025
-- Version: v1.0
+- Date: 12/2025, aktualisiert 11/2026 (mcp 2.x, Dialog im einfachen API-Call)
+- Version: v1.1
 
 ![line](images/banner.png)
 <p align="center">

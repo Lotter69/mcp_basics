@@ -116,68 +116,74 @@ def patchkabel_bestand_abfragen(farbe: str) -> str:
 
 ## Teil B - Das MCP-Server-Setup
 
-## Genutzte MCP-Handler-Typen (hier *list_tools()* und *call_tool()* vom Typ Tool)
+> **Hinweis:** Der Server ist für die Python-Bibliothek **`mcp` ab Version 2** geschrieben (siehe `requirements.txt`). In älteren Versionen (1.x) wurden die Handler mit Dekoratoren (`@server.list_tools()`, `@server.call_tool()`) registriert. Diese Schreibweise gibt es in Version 2 nicht mehr.
 
-**Definition:** Handler sind Funktionen, die auf Anfragen warten und darauf reagieren.
+## Genutzte MCP-Handler (hier *list_tools()* und *call_tool()* für Tools)
+
+**Definition:** Handler sind Funktionen, die auf bestimmte Anfragen des Clients warten und darauf reagieren. Jeder Handler ist für genau eine Art von Anfrage zuständig.
+
+| Anfrage des Clients (JSON-RPC) | Handler im Server | Rückgabe |
+|---|---|---|
+| `tools/list` | `list_tools()` | `ListToolsResult` |
+| `tools/call` | `call_tool()` | `CallToolResult` |
 
 weitere [Handler-Typen](https://modelcontextprotocol.io/specification/2025-11-25/server)
 
 ### list_tools()
-**Bedeutung:** Wichtig für die Initialisierungsphase zwischen Client udn Server, damit dem Client bekannt ist was der Server anbietet.
-
+**Bedeutung:** Wichtig für die Initialisierungsphase zwischen Client und Server, damit dem Client bekannt ist, was der Server anbietet.
 
 ```python
-@server.list_tools() 
-# -> Decorator: Ein Decorator ist eine Funktion, die eine andere Funktion einbettet. Registriert diese Funktion als Tool-Auflister
-
-async def list_tools() -> list[Tool]:       #-> Diese Funktion ist asynchron. 
-                                            # Während eine Funktion auf Daten wartet (z.B. Datenbank), kann der
-                                            # Server andere Anfragen bearbeiten
-                                            # Muss mit "await" aufgerufen werden
+async def list_tools(ctx, params) -> ListToolsResult:   # Diese Funktion ist asynchron.
+                                                        # Während eine Funktion auf Daten wartet (z. B. Datenbank),
+                                                        # kann der Server andere Anfragen bearbeiten.
+                                                        # ctx:    Kontext der Anfrage (wird hier nicht benötigt)
+                                                        # params: Parameter der Anfrage (wird hier nicht benötigt)
     """Gibt alle verfügbaren Tools zurück"""
-    return [TOOL_DESCRIPTION]               # Hier ein Element einer Liste, können auch mehrere Elemente (Tools sein))
+    return ListToolsResult(tools=[TOOL_DESCRIPTION])    # Hier ein Element der Liste, es können auch mehrere Tools sein
     # Ablauf
-    # 1. Die Liste wird vom MCP-Server als JSON serialisiert
-    # 2. Wird über STDIO (Standard Input/Output) an Client gesendet
+    # 1. Das Ergebnis wird vom MCP-Server als JSON serialisiert
+    # 2. Es wird über STDIO (Standard Input/Output) an den Client gesendet
     # 3. Client empfängt: {"tools": [{"name": "patchkabel_bestand_abfragen", ...}]}
     # 4. Client zeigt dem LLM: "Du kannst dieses Tool nutzen: ..."
 ```
 
-Diese Funktion wird vom Client aufgerufen um zu erfahren welche Tools auf dem Server zur Verfügung gestellt werden.
+Diese Funktion wird vom Client aufgerufen, um zu erfahren, welche Tools auf dem Server zur Verfügung gestellt werden.
 
 
 ### call_tool()
-**Bedeutung:** Wichtig bei der Tool-Ausführung des Clients, nachdem das LLM Werkzeugauswahl vorgenommen und dem Client mitgeteilt hat.
+**Bedeutung:** Wichtig bei der Tool-Ausführung des Clients, nachdem das LLM die Werkzeugauswahl vorgenommen und dem Client mitgeteilt hat.
 
 ```python
-@server.call_tool()                                      # Registriert diese Funktion als Tool-Aufrufer
-async def call_tool(name: str, arguments: dict) -> list[TextContent]:
+async def call_tool(ctx, params) -> CallToolResult:
     """Ruft das entsprechende Tool auf"""
-    
-    if name == "patchkabel_bestand_abfragen":           # Vergleich von geforderten Tool-Namen aus Client LLM-Kommunikation und vorhandenem Tool-Namen in Tool-Beschreibung des Servers
+    name = params.name                        # Name des gewünschten Tools (aus der Anfrage des Clients)
+    arguments = params.arguments or {}        # Argumente des Aufrufs, z. B. {"farbe": "blau"}
+
+    if name == "patchkabel_bestand_abfragen":    # Vergleich von gefordertem Tool-Namen (aus der Client-LLM-Kommunikation)
+                                                 # mit dem vorhandenen Tool-Namen in der Tool-Beschreibung des Servers
         result = patchkabel_bestand_abfragen(
             farbe=arguments["farbe"]
         )
-        return [TextContent(type="text", text=result)]
-    
+        return CallToolResult(content=[TextContent(type="text", text=result)])
+
     else:
         raise ValueError(f"Unbekanntes Tool: {name}")
 ```
 
 **Ablauf:**
-1. Der Handler des Servers empfängt: name="patchkabel_bestand_abfragen", arguments={"farbe": "blau"}
-2. if name == "patchkabel_bestand_abfragen": → TRUE
-3. result = patchkabel_bestand_abfragen(farbe="blau")
+1. Der Handler des Servers empfängt: `params.name = "patchkabel_bestand_abfragen"`, `params.arguments = {"farbe": "blau"}`
+2. `if name == "patchkabel_bestand_abfragen":` → TRUE
+3. `result = patchkabel_bestand_abfragen(farbe="blau")`
     → ruft die Tool-Funktion auf
-    → result = "Bestand blaue 1m Patchkabel: 42 Stück"
-4. return [TextContent(type="text", text="Bestand blaue 1m Patchkabel: 42 Stück")]
-    → Gibt MCP-formatiertes Ergebnis zurück
-5. MCP-Server sendet Antwort an Client
+    → result = "Bestand blaue 1m Patchkabel: 45 Stück"
+4. `return CallToolResult(content=[TextContent(type="text", text="Bestand blaue 1m Patchkabel: 45 Stück")])`
+    → Gibt das MCP-formatierte Ergebnis zurück
+5. MCP-Server sendet die Antwort an den Client
 6. LLM erhält das Ergebnis
-7. LLM antwortet User: "Ihr Lagerbestand zeigt 42 blaue 1m Patchkabel"
+7. LLM antwortet dem Benutzer: "Ihr Lagerbestand zeigt 45 blaue 1m Patchkabel"
 
 **Wichtige Ergänzungen:**
-1. Die Funktion muss eine Liste zurückgeben: [TextContent(...)]
+1. Das Ergebnis ist ein `CallToolResult`. Darin steht unter `content` eine Liste von Inhalten, hier ein `TextContent`.
 2. Bei mehreren Tools wären Bedingungen if/elif/else enthalten:
 
 ```python
@@ -189,6 +195,27 @@ elif name == "tool3":
     ...
 else:
     raise ValueError(...)
+```
+
+### Registrierung der Handler beim Server
+
+Damit der Server weiß, welche Funktion für welche Anfrage zuständig ist, werden die beiden Handler beim Erzeugen des Servers übergeben:
+
+```python
+server = Server(
+    "patchkabel-lager-server",       # Name des Servers (erscheint bei der Initialisierung als serverInfo.name)
+    version="1.0.0",                 # Version des Servers (serverInfo.version)
+    on_list_tools=list_tools,        # Anfrage tools/list  -> Funktion list_tools()
+    on_call_tool=call_tool,          # Anfrage tools/call  -> Funktion call_tool()
+)
+```
+
+Gestartet wird der Server über stdio. Er liest Anfragen von der Standardeingabe und schreibt Antworten auf die Standardausgabe:
+
+```python
+async def main():
+    async with stdio_server() as (read_stream, write_stream):
+        await server.run(read_stream, write_stream, server.create_initialization_options())
 ```
 
 ##  Datenfluss
@@ -220,13 +247,13 @@ Ein MCP Tool besteht aus:
 
 1. **Tool-Beschreibung** (JSON) - Was kann das Tool?
 2. **Funktion** (Python) - Wie funktioniert es?
-3. **MCP-Handler** (Server) - Womit soll der Server dienen?
+3. **MCP-Handler** (Server) - Welche Funktion beantwortet welche Anfrage des Clients? (Registrierung beim Erzeugen des Servers)
 
 
 ## Autoren und Urheberrecht
 - Created by: Michael Lotter
-- Date: 12/2025
-- Version: v1.0
+- Date: 12/2025, aktualisiert 11/2026 (Anpassung an mcp 2.x)
+- Version: v1.1
 
 ![line](images/banner.png)
 <p align="center">

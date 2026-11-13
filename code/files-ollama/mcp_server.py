@@ -113,6 +113,7 @@ async def call_tool(ctx, params) -> CallToolResult:
 # Server-Instanz erstellen und die beiden Funktionen als Handler registrieren
 server = Server(
     "patchkabel-lager-server",
+    version="1.0.0",
     on_list_tools=list_tools,
     on_call_tool=call_tool,
 )
