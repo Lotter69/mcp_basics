@@ -74,15 +74,13 @@ pip show mcp
 - Pakete werden noch NICHT gefiltert angezeigt
 - Status unten zeigt „Capturing from Adapter for loopback traffic capture“
 
-**Screenshot-Punkt:** Wireshark mit aktivem Loopback-Capture
-
 ---
 
 ### Schritt 2: Capture-Filter setzen (Optional - für weniger Rauschen)
 
 **Aktion:**
 1. In Wireshark oben: **Capture → Capture Filters**
-2. Oder direkt beim Start Filter eingeben: `tcp port 11434`
+2. Oder direkt beim Start Filter eingeben: `tcp.port==11434`
 
 **Hinweis:** 
 - Kann auch übersprungen werden
