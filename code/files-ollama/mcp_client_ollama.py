@@ -176,3 +176,11 @@ if __name__ == "__main__":
         print("\n\n Programm beendet.")
     except Exception as e:
         print(f"\n Fehler: {e}\n")
+        # Bei Fehlern in der Verbindung zum MCP-Server (TaskGroup) die eigentliche Ursache anzeigen
+        def ursachen(fehler, ebene=1):
+            for teil in getattr(fehler, "exceptions", []):
+                print(f"{'  ' * ebene}Ursache: {type(teil).__name__}: {teil}")
+                ursachen(teil, ebene + 1)
+        ursachen(e)
+        print("\n Tipp: Starten Sie den Server einzeln mit 'python mcp_server.py',")
+        print(" um die vollständige Fehlermeldung zu sehen (Beenden mit Strg+C).")
