@@ -259,17 +259,33 @@ Vergleichen Sie mit `TOOL_DESCRIPTION` in `mcp_server.py`: Genau diese Beschreib
 
 **Aktion:**
 1. Klick oben in der Mitte auf den Reiter **Tools** (neben **Servers**)
-2. Wählen Sie in der Liste **patchkabel_bestand_abfragen**
+2. Links erscheint die Liste **Tools (1)** – das Ergebnis von `tools/list`. Klick auf **patchkabel_bestand_abfragen**
 
-Es erscheinen die Beschreibung des Tools und ein Eingabefeld für den Parameter **farbe**.
+**Rechts sehen Sie:**
+- den Namen des Tools und darunter seine **Beschreibung** (`description`)
+- das Eingabefeld **farbe \*** mit dem Hinweis „Die Farbe des Patchkabels (blau, rot, oder gesamt für alle)“
+- eine Auswahlliste mit den Werten **blau**, **rot** und **gesamt**
+- den Schalter **Edit as JSON** und die Schaltfläche **Execute Tool**
+
+**Beobachten Sie:** Der Inspector baut dieses Formular vollständig aus der Tool-Beschreibung aus Schritt 7 und 8:
+
+| Im Formular | stammt aus dem `inputSchema` |
+|---|---|
+| Feldname **farbe** | `properties.farbe` |
+| Stern **\*** (Pflichtfeld) | `"required": ["farbe"]` |
+| Hinweistext unter dem Feld | `properties.farbe.description` |
+| Auswahlliste blau / rot / gesamt | `"enum": ["blau", "rot", "gesamt"]` |
+
+Genau diese Informationen erhält auch das LLM, um zu entscheiden, wie es das Tool aufruft.
 
 ---
 
 ### Schritt 10: Tool ausführen - Blaue Kabel
 
 **Aktion:**
-1. Bei **farbe** wählen bzw. eintragen: **blau**
-2. Tool über die Schaltfläche zum Ausführen starten (z. B. **Run Tool**)
+1. Bei **farbe** in der Auswahlliste **blau** wählen
+2. Optional: Schalter **Edit as JSON** einschalten – statt des Formulars erscheinen die Argumente als JSON (`{"farbe": "blau"}`). Das ist genau der Teil `arguments`, der gleich an den Server geschickt wird. Danach wieder ausschalten.
+3. Klick auf **Execute Tool**
 
 **Erwartetes Ergebnis:**
 - Es erscheint das Ergebnis des Servers
