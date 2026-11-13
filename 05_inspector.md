@@ -67,16 +67,13 @@ npx @modelcontextprotocol/inspector .\venv\Scripts\python.exe mcp_server.py
 
 Beim ersten Start fragt `npx`, ob das Paket installiert werden soll. Bestätigen Sie mit `y`.
 
-**Im Terminal erscheint** eine Meldung, dass der Inspector läuft, mit einer Adresse wie:
-```
-MCP Inspector is up and running at http://localhost:6274/?MCP_PROXY_AUTH_TOKEN=...
-```
+**Im Terminal erscheint** eine Meldung mit der Adresse des Inspectors (`http://localhost:…`).
 
 **Automatisch öffnet sich:**
 - Ihr Standard-Browser mit dieser Adresse
 - das MCP Inspector Interface
 
-> **Hinweis:** Öffnet sich der Browser nicht, kopieren Sie die vollständige Adresse aus dem Terminal (inklusive Token) in den Browser. Die Portnummer kann je nach Inspector-Version abweichen.
+> **Hinweis:** Öffnet sich der Browser nicht, kopieren Sie die vollständige Adresse aus dem Terminal in den Browser (gegebenenfalls inklusive Token). Ist die venv aktiviert, funktioniert auch der kürzere Aufruf `npx @modelcontextprotocol/inspector python mcp_server.py`.
 
 Lassen Sie das Terminal-Fenster geöffnet, solange Sie mit dem Inspector arbeiten.
 
@@ -84,46 +81,45 @@ Lassen Sie das Terminal-Fenster geöffnet, solange Sie mit dem Inspector arbeite
 
 ### Schritt 2: Verbindung zum Server herstellen
 
+Im Inspector sehen Sie unter **Servers** eine Karte für Ihren Server. Sie trägt den Namen des Startbefehls (**python**), den Typ **STDIO – Standard I/O** und den Befehl `python mcp_server.py`. Der Status steht auf **Disconnected**.
+
+> Der graue Hinweis **„Read-only session“** besagt nur, dass der Server direkt beim Start übergeben wurde und in der Oberfläche nicht dauerhaft gespeichert wird. Für die Übung spielt das keine Rolle.
+
 **Aktion:**
-1. Prüfen Sie links: **Transport Type** steht auf **STDIO**, bei **Command** und **Arguments** ist Ihr Aufruf aus Schritt 1 eingetragen.
-2. Klick auf **[Connect]**
+1. Klick auf den **Schalter** rechts neben **Disconnected** in der Server-Karte
 
 **Erwartetes Ergebnis:**
-- Links erscheint der Status **Connected**
-- Oben werden Server-Name und Version angezeigt: `patchkabel-lager-server` (Version `1.0.0`)
+- Der Status wechselt auf **Connected**, oben rechts erscheint zusätzlich die Dauer des Verbindungsaufbaus (z. B. „Connected (882ms)“)
+- Oben links steht jetzt der Name des Servers: **patchkabel-lager-server**
+- In der Server-Karte erscheint die ausgehandelte Protokollversion, z. B. **MCP 2025-11-25**
 
-> **Hinweis:** Der Server selbst gibt im Terminal keine Meldungen aus. Er kommuniziert ausschließlich über stdio mit dem Inspector.
+> **Hinweis:** Der Server selbst gibt im Terminal keine Meldungen aus. Er kommuniziert ausschließlich über stdio mit dem Inspector. Eigene Ausgaben des Servers (z. B. Fehlermeldungen) zeigt der Reiter **Console** rechts.
 
 ---
 
-### Schritt 3: History öffnen und Initialisierung betrachten
+### Schritt 3: Nachrichtenverlauf betrachten
 
-**Aktion:**
-1. Öffnen Sie den Bereich **History** (unten im Inspector)
-2. Suchen Sie den ersten Eintrag: **initialize**
+Rechts im Reiter **Protocol** listet der Bereich **Messages** alle Nachrichten zwischen Inspector (Client) und Server auf. Mit der Sortierung oben (**Newest First**) können Sie auf die älteste Nachricht zuerst umstellen.
 
-**Sie sehen:**
-```
-┌─────────────────────────────────────────────────────────┐
-│  History                                                │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  ▼ initialize                                           │
-│    Request                                              │
-│    Response                                             │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-```
+**Sie sehen drei Einträge, jeweils mit der Richtung CLIENT → SERVER:**
 
-Der Eintrag **tools/list** kommt erst hinzu, wenn Sie die Tools abfragen (Schritt 6).
+| Reihenfolge | Nachricht | Bedeutung |
+|---|---|---|
+| 1 | **initialize** | Client und Server stellen sich vor und einigen sich auf die Protokollversion |
+| 2 | **notifications/initialized** | Client meldet: „Initialisierung abgeschlossen, bereit“ – eine Benachrichtigung ohne Antwort |
+| 3 | **tools/list** | Client fragt die verfügbaren Tools ab – der Inspector erledigt das beim Verbinden automatisch |
+
+Bei **initialize** und **tools/list** stehen rechts die Antwortzeit und **OK**: Der Server hat geantwortet. **notifications/initialized** hat keine Antwort, weil eine Benachrichtigung (Notification) keine erwartet.
+
+> **Merke:** Die ersten beiden Nachrichten bilden die **Initialisierung** (Lebenszyklus der Verbindung), ab der dritten beginnt die eigentliche **Arbeit** mit den Fähigkeiten des Servers.
 
 ---
 
 ### Schritt 4: Initialize Request analysieren
 
 **Aktion:**
-1. Klick auf den Eintrag **initialize** (zum Aufklappen)
-2. Klick auf **Request**
+1. Klappen Sie den Eintrag **initialize** auf (Pfeil-Symbol rechts im Eintrag)
+2. Sehen Sie sich die Anfrage (Request) an
 
 **Sie sehen (JSON, gekürzt):**
 ```json
@@ -132,24 +128,24 @@ Der Eintrag **tools/list** kommt erst hinzu, wenn Sie die Tools abfragen (Schrit
   "id": 0,
   "method": "initialize",
   "params": {
-    "protocolVersion": "2025-06-18",
+    "protocolVersion": "2025-11-25",
     "capabilities": { ... },
     "clientInfo": {
-      "name": "mcp-inspector",
+      "name": "...",
       "version": "..."
     }
   }
 }
 ```
 
-> **Hinweis:** `protocolVersion`, `id`, die `capabilities` und die Versionsnummer des Inspectors hängen von der eingesetzten Inspector-Version ab und können bei Ihnen abweichen.
+> **Hinweis:** `id`, `capabilities` und die Angaben in `clientInfo` hängen von der eingesetzten Inspector-Version ab und können bei Ihnen abweichen.
 
 ---
 
 ### Schritt 5: Initialize Response analysieren
 
 **Aktion:**
-1. Klick auf **Response** unter initialize
+1. Sehen Sie sich im aufgeklappten Eintrag **initialize** die Antwort (Response) an
 
 **Sie sehen (JSON):**
 ```json
@@ -157,7 +153,7 @@ Der Eintrag **tools/list** kommt erst hinzu, wenn Sie die Tools abfragen (Schrit
   "jsonrpc": "2.0",
   "id": 0,
   "result": {
-    "protocolVersion": "2025-06-18",
+    "protocolVersion": "2025-11-25",
     "capabilities": {
       "tools": {
         "listChanged": false
@@ -172,36 +168,35 @@ Der Eintrag **tools/list** kommt erst hinzu, wenn Sie die Tools abfragen (Schrit
 ```
 
 **Beobachten Sie:**
-- `serverInfo.name` und `serverInfo.version` stammen aus `mcp_server.py`: `Server("patchkabel-lager-server", version="1.0.0", ...)`
+- `serverInfo.name` und `serverInfo.version` stammen aus `mcp_server.py`: `Server("patchkabel-lager-server", version="1.0.0", ...)`. Der Name erscheint auch oben links im Inspector.
 - `capabilities.tools` zeigt dem Client: Dieser Server bietet Tools an.
-- Der Server übernimmt die vom Client angefragte `protocolVersion`, sofern er sie unterstützt.
+- `protocolVersion` ist die ausgehandelte Version, die auch in der Server-Karte angezeigt wird.
 
 ---
 
 ### Schritt 6: tools/list Request analysieren
 
 **Aktion:**
-1. Klick auf den Reiter **Tools** (oben)
-2. Klick auf **[List Tools]**
-3. Zurück in die **History**: Klick auf den neuen Eintrag **tools/list**
-4. Klick auf **Request**
+1. Klappen Sie den Eintrag **tools/list** auf
+2. Sehen Sie sich die Anfrage an
 
 **Sie sehen (JSON):**
 ```json
 {
   "jsonrpc": "2.0",
   "id": 1,
-  "method": "tools/list",
-  "params": {}
+  "method": "tools/list"
 }
 ```
+
+Je nach Inspector-Version steht zusätzlich ein leeres `"params": {}` darin.
 
 ---
 
 ### Schritt 7: tools/list Response analysieren - Teil 1 (Struktur)
 
 **Aktion:**
-1. Klick auf **Response** unter tools/list
+1. Sehen Sie sich im aufgeklappten Eintrag **tools/list** die Antwort an
 
 **Sie sehen (JSON):**
 ```json
@@ -256,13 +251,13 @@ Vergleichen Sie mit `TOOL_DESCRIPTION` in `mcp_server.py`: Genau diese Beschreib
 
 ---
 
-### Schritt 9: Tool im Tools-Reiter auswählen
+### Schritt 9: Tool im Reiter Tools auswählen
 
 **Aktion:**
-1. Im Reiter **Tools** erscheint nach „List Tools“ die Liste der verfügbaren Tools
-2. Klick auf **patchkabel_bestand_abfragen**
+1. Klick oben in der Mitte auf den Reiter **Tools** (neben **Servers**)
+2. Wählen Sie in der Liste **patchkabel_bestand_abfragen**
 
-Rechts erscheinen Beschreibung und Eingabefeld für den Parameter **farbe**.
+Es erscheinen die Beschreibung des Tools und ein Eingabefeld für den Parameter **farbe**.
 
 ---
 
@@ -270,11 +265,10 @@ Rechts erscheinen Beschreibung und Eingabefeld für den Parameter **farbe**.
 
 **Aktion:**
 1. Bei **farbe** wählen bzw. eintragen: **blau**
-2. Klick auf **[Run Tool]**
+2. Tool über die Schaltfläche zum Ausführen starten (z. B. **Run Tool**)
 
 **Erwartetes Ergebnis:**
-- Unten erscheint der Ergebnisbereich
-- Er zeigt die Antwort vom Server
+- Es erscheint das Ergebnis des Servers
 
 **Angezeigtes Ergebnis:**
 ```json
@@ -291,13 +285,11 @@ Rechts erscheinen Beschreibung und Eingabefeld für den Parameter **farbe**.
 
 ---
 
-### Schritt 11: History - tools/call Request analysieren
+### Schritt 11: tools/call Request analysieren
 
 **Aktion:**
-1. Zurück zur **History**
-2. Neuer Eintrag: **tools/call**
-3. Klick auf den Eintrag **tools/call**
-4. Klick auf **Request**
+1. Rechts unter **Protocol → Messages** ist ein neuer Eintrag hinzugekommen: **tools/call**
+2. Klappen Sie ihn auf und sehen Sie sich die Anfrage an
 
 **Sie sehen (JSON):**
 ```json
@@ -319,7 +311,7 @@ Rechts erscheinen Beschreibung und Eingabefeld für den Parameter **farbe**.
 ### Schritt 12: tools/call Response analysieren
 
 **Aktion:**
-1. Klick auf **Response** unter tools/call
+1. Sehen Sie sich im aufgeklappten Eintrag **tools/call** die Antwort an
 
 **Sie sehen (JSON):**
 ```json
@@ -360,8 +352,9 @@ Rechts erscheinen Beschreibung und Eingabefeld für den Parameter **farbe**.
 
 ## Fehlerbehebung
 
-- *Connect schlägt fehl:* Prüfen Sie, ob der Server allein startet: `python mcp_server.py` (läuft er ohne Meldung, ist er in Ordnung, Beenden mit Strg+C). Bricht er ab, passt meist die `mcp`-Version nicht zur Datei: `pip show mcp` muss Version 2.x zeigen.
-- *Browser zeigt Fehler zur Authentifizierung:* Die Adresse muss den Token aus dem Terminal enthalten (`?MCP_PROXY_AUTH_TOKEN=...`).
+- *Schalter springt nicht auf Connected:* Prüfen Sie, ob der Server allein startet: `python mcp_server.py` (läuft er ohne Meldung, ist er in Ordnung, Beenden mit Strg+C). Bricht er ab, passt meist die `mcp`-Version nicht zur Datei: `pip show mcp` muss Version 2.x zeigen.
+- *Browser zeigt Fehler zur Authentifizierung:* Verwenden Sie die vollständige Adresse aus dem Terminal (gegebenenfalls inklusive Token).
+- *Fehlermeldungen des Servers:* Reiter **Console** rechts neben **Protocol** öffnen.
 
 ---
 
